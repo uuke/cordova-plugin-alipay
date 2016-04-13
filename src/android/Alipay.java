@@ -1,9 +1,7 @@
 package xwang.cordova.alipay;
 
 import android.util.Log;
-
 import com.alipay.sdk.app.PayTask;
-
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;
 import org.apache.cordova.CordovaPlugin;
@@ -24,7 +22,7 @@ public class Alipay extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
-        if(action.equals("pay")) {
+        if (action.equals("pay")) {
             return pay(args, callbackContext);
         }
         return true;
@@ -56,10 +54,10 @@ public class Alipay extends CordovaPlugin {
         return true;
     }
 
-    private JSONObject parsePayResult(String payResult) throws JSONException{
+    private JSONObject parsePayResult(String payResult) throws JSONException {
         String resultStatus = "", memo = "", result = "";
         String[] keyPairs = payResult.split(";");
-        for(String keyPair : keyPairs) {
+        for (String keyPair : keyPairs) {
             if (keyPair.startsWith("resultStatus")) {
                 resultStatus = gatValue(keyPair, "resultStatus");
             }
@@ -70,7 +68,7 @@ public class Alipay extends CordovaPlugin {
                 memo = gatValue(keyPair, "memo");
             }
         }
-        String json = "{resultStatus: " + resultStatus + ", memo: \"" + memo + "\", result: \"" + result +"\"}";
+        String json = "{resultStatus: " + resultStatus + ", memo: \"" + memo + "\", result: \'" + result + "\'}";
         return new JSONObject(json);
     }
 
